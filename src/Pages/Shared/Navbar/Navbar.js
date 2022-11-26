@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import AuthPovider, { AuthContext } from "../../../Contexts/AuthPovider";
+import  { AuthContext } from "../../../Contexts/AuthPovider";
 
 const Navbar = () => {
   const { user,logOut } = useContext(AuthContext);
@@ -37,6 +37,9 @@ const Navbar = () => {
                 </div>
               )}
             </Link>
+          </li>
+          <li>
+            <Link to={'/dashboard'}>Dashboard</Link>
           </li>
           <li>
             <button onClick={handleLogOut} className="btn btn-error text-white">
