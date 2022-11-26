@@ -1,19 +1,73 @@
-import React, { useState } from 'react';
+import { GoogleAuthProvider } from 'firebase/auth';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthPovider';
 
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-
+    const {providerLogin,signIn }  = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
 
-    const handleLogin = () =>{
+    const from = location.state?.from?.pathname || "/";
 
+    const googleProvider = new GoogleAuthProvider();
+
+    const handleLogin = (data) =>{
+        console.log(data);
+        setLoginError('');
+        signIn(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                setLoginUserEmail(data.email);
+                navigate(from, { replace: true });
+            })
+            .catch(error => {
+                console.log(error.message)
+                setLoginError(error.message);
+            });
     }
+
+    const handleGoogleSignIn = () => {
+        providerLogin(googleProvider)
+        .then((result) => {
+          const user = result.user;
+    
+          const currentUser = {
+            userId: user.uid,
+          }
+    
+          console.log(currentUser);
+          setLoginUserEmail(user.email);
+          navigate(from, { replace: true });
+    
+        //   fetch('https://service-review-server-amit7366.vercel.app/jwt',{
+        //     method: 'POST',
+        //     headers: {
+        //       'content-type' : 'application/json'
+        //     },
+        //     body: JSON.stringify(currentUser)
+        //   })
+        //   .then(res => res.json())
+        //   .then(data => {
+        //     console.log(data);
+        //     localStorage.setItem('token',data.token)
+    
+        //   toast.success("Successfully Loged In");
+    
+        //   navigate(from, { replace: true });
+        //   })
+          
+        })
+          .catch((error) => console.log(error));
+        
+      };
     return (
         <div className='h-[800px] flex justify-center items-center'>
             <div className='w-96 p-7'>
@@ -46,7 +100,7 @@ const Login = () => {
                 </form>
                 <p>New to Doctors Portal <Link className='text-secondary' to="/signup">Create new Account</Link></p>
                 <div className="divider">OR</div>
-                <button className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
+                <button className='btn btn-outline w-full' onClick={handleGoogleSignIn}>CONTINUE WITH GOOGLE</button>
             </div>
         </div>
     );

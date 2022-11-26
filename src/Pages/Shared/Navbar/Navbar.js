@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthPovider, { AuthContext } from "../../../Contexts/AuthPovider";
 
 const Navbar = () => {
+  const { user,logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+        .then(() => { })
+        .catch(err => console.log(err));
+}
+
+  console.log(user);
   const menuItems = (
     <React.Fragment>
       <li>
@@ -10,12 +20,40 @@ const Navbar = () => {
       <li>
         <Link to="/blog">Blog</Link>
       </li>
-      <li>
-        <Link to='/login'>Login</Link>
-      </li>
-      <li>
-        <Link to='/registration'>Registration</Link>
-      </li>
+      {user ? (
+        <>
+          <li className="tooltip tooltip-left" data-tip={user.displayName}>
+            <Link>
+              {user?.photoURL ? (
+                <div className="w-8 rounded">
+                  <img
+                    src={user?.photoURL}
+                    alt="Tailwind-CSS-Avatar-component"
+                  />
+                </div>
+              ) : (
+                <div className="bg-neutral-focus text-neutral-content rounded-full">
+                  <span className="text-xs">{user.displayName}</span>
+                </div>
+              )}
+            </Link>
+          </li>
+          <li>
+            <button onClick={handleLogOut} className="btn btn-error text-white">
+              Logout
+            </button>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/registration">Registration</Link>
+          </li>
+        </>
+      )}
     </React.Fragment>
   );
   return (
@@ -50,7 +88,6 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">{menuItems}</ul>
       </div>
-
     </div>
   );
 };

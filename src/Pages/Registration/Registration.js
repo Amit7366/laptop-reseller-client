@@ -24,13 +24,14 @@ const Registration = () => {
     .then(result => {
         const user = result.user;
         console.log(user);
-        toast('User Created Successfully.')
+        toast.success('User Created Successfully.')
         const userInfo = {
             displayName: data.name
         }
         updateUser(userInfo)
             .then(() => {
                 saveUser(data.name, data.email,data.role);
+
             })
             .catch(err => console.log(err));
     })
