@@ -11,7 +11,7 @@ const Navbar = () => {
         .catch(err => console.log(err));
 }
 
-  console.log(user);
+  
   const menuItems = (
     <React.Fragment>
       <li>
