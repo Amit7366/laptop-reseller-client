@@ -1,46 +1,24 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import CategoryCard from "./CategoryCard";
 
 const Category = () => {
+  const {data: categories = [], refetch} = useQuery({
+    queryKey: ['category'],
+    queryFn: async() =>{
+        const res = await fetch('http://localhost:5000/category');
+        const data = await res.json();
+        return data;
+    }
+});
   return (
-    <div>
-      <h2>Categories</h2>
+    <div className="my-4">
+      <h2 className="text-3xl font-medium my-2">Categories</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="card w-96 bg-base-100 shadow-xl image-full">
-          <figure>
-            <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
-        <div className="card w-96 bg-base-100 shadow-xl image-full">
-          <figure>
-            <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
-        <div className="card w-96 bg-base-100 shadow-xl image-full">
-          <figure>
-            <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
+        {
+          categories.map(category => <CategoryCard key={category._id} category={category}></CategoryCard>)
+        }
+
       </div>
     </div>
   );

@@ -129,7 +129,7 @@ const AddProduct = () => {
                 </div>
                 <div className="form-control w-full max-w-xs">
                     <label className="label"> <span className="label-text">Used Period in years</span></label>
-                    <input type="number" {...register("usedPeriod", {
+                    <input type="number" step="0.01" {...register("usedPeriod", {
                         required: "Used Period is Required"
                     })} className="input input-bordered w-full max-w-xs" />
                 </div>
