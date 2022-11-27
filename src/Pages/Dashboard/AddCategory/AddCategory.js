@@ -50,7 +50,7 @@ const AddCategory = () => {
                 .then(result =>{
                     console.log(result);
                     toast.success(`${data.categoryName} is added successfully`);
-                    navigate('/dashboard/my-product')
+                    navigate('/dashboard/all-category')
                 })
             }
         })

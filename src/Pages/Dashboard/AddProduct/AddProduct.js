@@ -1,25 +1,30 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Contexts/AuthPovider';
+import JoditEditor from 'jodit-react';
 
 const AddProduct = () => {
     const {user} = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbb_key;
-
     const navigate = useNavigate();
 
-    // const { data: products, isLoading} = useQuery({
-    //     queryKey: ['product'],
-    //     queryFn: async () =>{
-    //         const res = await fetch('http://localhost:5000/product');
-    //         const data = await res.json();
-    //         return data;
-    //     }
-    // })
+    const editor = useRef(null);
+	const [content, setContent] = useState('');
+
+
+
+    const {data: categories = [], refetch} = useQuery({
+        queryKey: ['category'],
+        queryFn: async() =>{
+            const res = await fetch('http://localhost:5000/category');
+            const data = await res.json();
+            return data;
+        }
+    });
 
     const handleAddProduct = data  =>{
         const image = data.image[0];
@@ -51,7 +56,7 @@ const AddProduct = () => {
                     postingTime: Date().toLocaleString(),
                     status: 'unsold',
                     mobile: data.mobile,
-                    description: data.description,
+                    description: content,
                     condition: data.condition,
                     
                 }
@@ -76,7 +81,7 @@ const AddProduct = () => {
 
     }
     return (
-        <div className='w-[100%] md:w-[50%] lg:w-[40%] p-7'>
+        <div className='w-[100%] md:w-[50%] lg:w-[60%] p-7'>
             <h2 className="text-4xl">Add Product</h2>
             <form onSubmit={handleSubmit(handleAddProduct)}>
                 <div className='grid grid-cols-2 gap-3'>
@@ -99,8 +104,15 @@ const AddProduct = () => {
                     <select 
                     {...register('location')}
                     className="select input-bordered w-full max-w-xs">
-                        <option value="A">A</option>
-                        <option value="B">B</option>
+                        <option value="Dhaka">Dhaka</option>
+                        <option value="Chittagong">Chittagong</option>
+                        <option value="Rajshahi">Rajshahi</option>
+                        <option value="Khulna">Khulna</option>
+                        <option value="Tangail">Tangail</option>
+                        <option value="Dinajpur">Dinajpur</option>
+                        <option value="Bogura">Bogura</option>
+                        <option value="Mymensingha">Mymensingha</option>
+                        
                     </select>
                 </div>
                 <div className="form-control w-full max-w-xs">
@@ -149,8 +161,9 @@ const AddProduct = () => {
                     <select 
                     {...register('category')}
                     className="select input-bordered w-full max-w-xs">
-                       <option value="C">C</option>
-                       <option value="D">D</option>   
+                       {
+                        categories.map(category => <option key={category._id} value={category.categoryName}>{category.categoryName}</option>   )
+                       }  
                     </select>
                 </div>
                 <div className="form-control w-full max-w-xs">
@@ -173,13 +186,21 @@ const AddProduct = () => {
                 </div>
                 <div className="form-control w-full ">
                     <label className="label"> <span className="label-text">Description</span></label>
-                    
-                    <textarea {...register("description", {
+                    <JoditEditor
+			ref={editor}
+			value={content}
+			tabIndex={1} // tabIndex of textarea
+			onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+			onChange={newContent => {}}
+		/>
+
+                    {/* <textarea {...register("description", {
                         required: "Description is Required"
-                    })}  className="textarea textarea-bordered" placeholder="Description"></textarea>
+                    })}   className="textarea textarea-bordered" placeholder="Description"></textarea> */}
                 </div>
                 <input className='btn btn-accent w-full mt-4' value="Add Product" type="submit" />
             </form>
+            {/* <div dangerouslySetInnerHTML={{__html: content}}></div> */}
         </div>
     );
 };
