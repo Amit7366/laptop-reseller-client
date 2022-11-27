@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { FaCheckCircle,FaMapMarker } from "react-icons/fa";
 const AdvertiseCard = ({ad}) => {
-    const {productName,productPrice,resalePrice,originalPrice,productImage,name,email,usedPeriod,condition} = ad;
+    const {productName,resalePrice,originalPrice,productImage,name,usedPeriod,condition,productLocation,postingTime,category} = ad;
     return (
-        <Link className="card w-96 bg-base-100 shadow-xl">
+        <div className="card w-full bg-base-100 shadow-xl">
           <figure className='h-64'>
             <img src={productImage} alt={productName} />
           </figure>
@@ -20,13 +20,20 @@ const AdvertiseCard = ({ad}) => {
               }
               
             </h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <div className="badge badge-outline">Fashion</div>
-              <div className="badge badge-outline">Products</div>
+            <div>
+                <h4 className='font-medium text-sm text-green-600'>Resale Price: {resalePrice}</h4>
+                <h4 className='font-medium text-sm text-teal-800'>Original Price: {originalPrice}</h4>
+                <p className='font-bold text-xs'><span className='text-cyan-600'>Posting Time:</span> {postingTime}</p>
             </div>
+            <div className="card-actions justify-end">
+              <div className="badge badge-outline">{name} {} <FaCheckCircle className='text-purple-600'></FaCheckCircle> </div>
+              <div className="badge badge-outline">used {usedPeriod} year</div>
+              <div className="badge badge-outline">{category}</div>
+              <div className="badge badge-outline"><FaMapMarker></FaMapMarker> {productLocation}</div>
+            </div>
+            <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">Book Now</button>
           </div>
-        </Link>
+        </div>
     );
 };
 

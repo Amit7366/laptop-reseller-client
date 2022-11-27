@@ -43,7 +43,6 @@ const Login = () => {
             userId: user.uid,
           }
     
-          console.log(currentUser);
           setLoginUserEmail(user.email);
           navigate(from, { replace: true });
     

@@ -1,14 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import Info from '../../../assets/about.jpg';
 
 const About = () => {
     return (
-        <div className="hero min-h-screen bg-base-200">
+        <div className="hero min-h-16 my-4">
   <div className="hero-content flex-col lg:flex-row">
-    <img src="https://placeimg.com/260/400/arch" className="max-w-sm rounded-lg shadow-2xl" alt=''/>
+    <img src={Info} className="max-w-sm rounded-lg shadow-2xl" alt=''/>
     <div>
-      <h1 className="text-5xl font-bold">Box Office News!</h1>
-      <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-      <button className="btn btn-primary">Get Started</button>
+      <h1 className="text-5xl font-bold">Lap Hunter</h1>
+      <p className="py-6">Welcome, we know why you are here. You are in the right place. Get the best quality used laptop from the town. We give you special service and 24/7 support. We are the best choice for you.</p>
+      <Link to={'/login'} className="btn btn-primary text-white">Get Started</Link>
     </div>
   </div>
 </div>

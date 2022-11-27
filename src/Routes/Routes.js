@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Main from "../Layout/Main";
 import Blog from "../Pages/Blog/Blog";
+import CategoryProduct from "../Pages/CategoryProduct/CategoryProduct";
 import AddCategory from "../Pages/Dashboard/AddCategory/AddCategory";
 import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
 import AllCategory from "../Pages/Dashboard/AllCategory/AllCategory";
@@ -33,6 +34,11 @@ const router = createBrowserRouter([
             {
                 path:'/registration',
                 element: <Registration></Registration>
+            },
+            {
+                path:'/category/:id',
+                loader: ({params}) => fetch(`http://localhost:5000/category/${params.id}`),
+                element: <PrivateRoutes><CategoryProduct></CategoryProduct></PrivateRoutes>
             },
         ]
     },
