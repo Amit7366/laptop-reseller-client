@@ -49,7 +49,10 @@ const AddProduct = () => {
                     advertise: data.advertise,
                     category: data.category,
                     postingTime: Date().toLocaleString(),
-                    status: 'unsold'
+                    status: 'unsold',
+                    mobile: data.mobile,
+                    description: data.description,
+                    condition: data.condition,
                     
                 }
 
@@ -147,11 +150,33 @@ const AddProduct = () => {
                     {...register('category')}
                     className="select input-bordered w-full max-w-xs">
                        <option value="C">C</option>
-                       <option value="D">D</option>
-                        
-                        
+                       <option value="D">D</option>   
                     </select>
                 </div>
+                <div className="form-control w-full max-w-xs">
+                    <label className="label"> <span className="label-text">Condition</span></label>
+                    <select 
+                    {...register('condition')}
+                    className="select input-bordered w-full max-w-xs">
+                       <option value="best">Best</option>
+                       <option value="medium">Medium</option>   
+                       <option value="good">Good</option>   
+                    </select>
+                </div>
+                <div className="form-control w-full max-w-xs">
+                    <label className="label"> <span className="label-text">Mobile</span></label>
+                    <input type="text" {...register("mobile", {
+                        required: "Email is Required"
+                    })}  className="input input-bordered w-full max-w-xs" />
+                </div>
+                
+                </div>
+                <div className="form-control w-full ">
+                    <label className="label"> <span className="label-text">Description</span></label>
+                    
+                    <textarea {...register("description", {
+                        required: "Description is Required"
+                    })}  className="textarea textarea-bordered" placeholder="Description"></textarea>
                 </div>
                 <input className='btn btn-accent w-full mt-4' value="Add Product" type="submit" />
             </form>
