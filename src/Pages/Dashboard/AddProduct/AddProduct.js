@@ -200,7 +200,7 @@ const AddProduct = () => {
                 </div>
                 <input className='btn btn-accent w-full mt-4' value="Add Product" type="submit" />
             </form>
-            {/* <div dangerouslySetInnerHTML={{__html: content}}></div> */}
+            
         </div>
     );
 };

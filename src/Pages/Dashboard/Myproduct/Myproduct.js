@@ -31,6 +31,7 @@ const Myproduct = () => {
             <th>Original Price</th>
             <th>Resale Price</th>
             <th>Years Used</th>
+            <th>Advertise</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -54,6 +55,7 @@ const Myproduct = () => {
               <td>{product.originalPrice}</td>
               <td>{product.resalePrice}</td>
               <td>{product.usedPeriod}</td>
+              <td>{product.advertise}</td>
               <td>{product.status}</td>
             </tr>
           ))}
