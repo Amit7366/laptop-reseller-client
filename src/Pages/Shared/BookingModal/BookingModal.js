@@ -27,8 +27,24 @@ const BookingModal = ({ product, setProduct }) => {
       location: location,
       seller: seller,
     };
-    toast.success("Booking Confirmed");
-    console.log(booking);
+
+    fetch("http://localhost:5000/booking", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          setProduct(null);
+          toast.success("Booking confirmed");
+        } else {
+          toast.error(data.message);
+        }
+      });
   };
 
   return (
