@@ -42,7 +42,15 @@ const BookingModal = ({ product, setProduct }) => {
         console.log(data);
         if (data.acknowledged) {
           setProduct(null);
-          toast.success("Booking confirmed");
+          fetch(`http://localhost:5000/product/${booking.productId}`,{
+            method: 'PUT'
+          })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            toast.success("Booking confirmed");
+          })
+          
         } else {
           toast.error(data.message);
         }
