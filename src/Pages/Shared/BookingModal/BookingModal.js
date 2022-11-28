@@ -3,8 +3,9 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../../../Contexts/AuthPovider";
 
 const BookingModal = ({ product, setProduct }) => {
-  const { productName, resalePrice, email: sellerEmail } = product;
+  const { _id,productName, resalePrice, email: sellerEmail } = product;
   const { user } = useContext(AuthContext);
+  
 
   const handleBooking = (event) => {
     event.preventDefault();
@@ -21,6 +22,7 @@ const BookingModal = ({ product, setProduct }) => {
     const booking = {
       name: name,
       email: email,
+      productId: _id,
       productName: productName,
       productPrice: productPrice,
       phone: phone,

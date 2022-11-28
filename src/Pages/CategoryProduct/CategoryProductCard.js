@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const CategoryProductCard = ({ad,setProduct}) => {
 
-    const {productName,resalePrice,originalPrice,productImage,name,email,usedPeriod,condition,productLocation,postingTime,category,description} = ad;
+    const {productName,resalePrice,originalPrice,productImage,name,email,usedPeriod,condition,productLocation,postingTime,category,description,status:productStatus} = ad;
 
     const [seller,setSeller] = useState('');
     useEffect(() =>{
@@ -45,7 +45,11 @@ const CategoryProductCard = ({ad,setProduct}) => {
             <div className="badge badge-outline"><FaMapMarker></FaMapMarker> {productLocation}</div>
           </div>
           <div dangerouslySetInnerHTML={{__html: description}}></div>
-          <label className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"  htmlFor="booking-modal" onClick={()=> setProduct(ad)}>Book Now</label>
+          {productStatus === 'booked' ? 
+          <label disabled className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"  htmlFor="booking-modal" onClick={()=> setProduct(ad)}>Book Now   </label> 
+          :
+           <label className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"  htmlFor="booking-modal" onClick={()=> setProduct(ad)}>Book Now   </label> }
+          
         </div>
       </div>
     );
