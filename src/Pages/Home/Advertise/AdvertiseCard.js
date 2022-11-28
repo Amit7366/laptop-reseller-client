@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCheckCircle,FaMapMarker } from "react-icons/fa";
 const AdvertiseCard = ({ad,setProduct}) => {
-    const {productName,resalePrice,originalPrice,productImage,name,email,usedPeriod,condition,productLocation,postingTime,category} = ad;
+    const {productName,resalePrice,originalPrice,productImage,name,email,usedPeriod,condition,productLocation,postingTime,category,status:productStatus} = ad;
 
     const [seller,setSeller] = useState('');
     useEffect(() =>{
@@ -38,7 +38,24 @@ const AdvertiseCard = ({ad,setProduct}) => {
               <div className="badge badge-outline">{category}</div>
               <div className="badge badge-outline"><FaMapMarker></FaMapMarker> {productLocation}</div>
             </div>
-            <label className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"  htmlFor="booking-modal" onClick={()=> setProduct(ad)}>Book Now</label>
+            {productStatus === "booked" ? (
+          <label
+            disabled
+            className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"
+            htmlFor="booking-modal"
+            onClick={() => setProduct(ad)}
+          >
+            Book Now{" "}
+          </label>
+        ) : (
+          <label
+            className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"
+            htmlFor="booking-modal"
+            onClick={() => setProduct(ad)}
+          >
+            Book Now{" "}
+          </label>
+        )}
           </div>
         </div>
     );
