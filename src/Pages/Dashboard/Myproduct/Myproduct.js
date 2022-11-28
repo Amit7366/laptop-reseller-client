@@ -4,22 +4,7 @@ import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 
 const Myproduct = () => {
-  // const [products, setProducts] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5000/products")
-  //     .then(function (response) {
-  //       setProducts(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       // handle error
-  //       console.log(error);
-  //     })
-  //     .then(function () {
-  //       // always executed
-  //     });
-  // }, []);
 
   const {
     data: products = [],

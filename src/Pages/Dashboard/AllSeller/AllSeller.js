@@ -30,6 +30,22 @@ const AllSeller = () => {
       });
   };
 
+  const handleDelete = id =>{
+    fetch(`http://localhost:5000/seller/${id}`, {
+      method: 'DELETE', 
+      headers: {
+          authorization: `bearer ${localStorage.getItem('accessToken')}`
+      }
+  })
+  .then(res => res.json())
+  .then(data => {
+      if(data.deletedCount > 0){
+          refetch();
+          toast.success(`Buyer deleted successfully`)
+      }
+  })
+  }
+
   return (
     <div className="overflow-x-auto">
       <h1>All Seller</h1>
@@ -50,19 +66,35 @@ const AllSeller = () => {
               <td>{seller.email}</td>
               <td>
                 {seller.status === "verified" ? (
+                  <>
                   <button
                     className="btn btn-sm btn-success text-white"
                     disabled
                   >
                     {seller.status}
                   </button>
-                ) : (
                   <button
+                  onClick={() => handleDelete(seller._id)}
+                  className="btn btn-sm btn-warning text-white ml-2"
+                >
+                  Delete
+                </button>
+                  </>
+                ) : (
+                  <>
+                    <button
                     onClick={() => handleVerifiation(seller._id)}
                     className="btn btn-sm btn-warning text-white"
                   >
                     Verify
                   </button>
+                  <button
+                  onClick={() => handleDelete(seller._id)}
+                  className="btn btn-sm btn-warning text-white ml-2"
+                >
+                  Delete
+                </button>
+                  </>
                 )}
               </td>
             </tr>

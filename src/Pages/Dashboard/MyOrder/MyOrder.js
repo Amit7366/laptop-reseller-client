@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthPovider";
 
 const MyOrder = () => {
@@ -23,6 +24,7 @@ const MyOrder = () => {
             <th>Location</th>
             <th>Phone</th>
             <th>Seller</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -36,7 +38,7 @@ const MyOrder = () => {
               <td>{order.location}</td>
               <td>{order.phone}</td>
               <td>{order.seller}</td>
-              
+              <td><Link to={`/dashboard/payment/${order._id}`} className="btn btn-sm btn-info btn-outline hover:text-white">Pay Now</Link></td>
             </tr>
           ))}
         </tbody>
