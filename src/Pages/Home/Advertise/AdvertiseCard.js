@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaCheckCircle,FaMapMarker } from "react-icons/fa";
-const AdvertiseCard = ({ad}) => {
+const AdvertiseCard = ({ad,setProduct}) => {
     const {productName,resalePrice,originalPrice,productImage,name,usedPeriod,condition,productLocation,postingTime,category} = ad;
     return (
         <div className="card w-full bg-base-100 shadow-xl">
@@ -13,9 +13,9 @@ const AdvertiseCard = ({ad}) => {
               {productName}
 
               {
-                 condition == 'good' ? <div className={`badge badge-error text-white`}>{condition}</div> 
-                : condition == 'medium' ? <div className={`badge badge-primary text-white`}>{condition}</div>
-                : condition == 'best' ? <div className={`badge badge-secondary text-white`}>{condition}</div>
+                 condition === 'good' ? <div className={`badge badge-error text-white`}>{condition}</div> 
+                : condition === 'medium' ? <div className={`badge badge-primary text-white`}>{condition}</div>
+                : condition === 'best' ? <div className={`badge badge-secondary text-white`}>{condition}</div>
                 : ''
               }
               
@@ -31,7 +31,7 @@ const AdvertiseCard = ({ad}) => {
               <div className="badge badge-outline">{category}</div>
               <div className="badge badge-outline"><FaMapMarker></FaMapMarker> {productLocation}</div>
             </div>
-            <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">Book Now</button>
+            <label className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"  htmlFor="booking-modal" onClick={()=> setProduct(ad)}>Book Now</label>
           </div>
         </div>
     );

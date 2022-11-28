@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCheckCircle,FaMapMarker } from "react-icons/fa";
+import { useQuery } from '@tanstack/react-query';
 
 const CategoryProductCard = ({ad,setProduct}) => {
 
-    const {productName,resalePrice,originalPrice,productImage,name,usedPeriod,condition,productLocation,postingTime,category,description} = ad;
+    const {productName,resalePrice,originalPrice,productImage,name,email,usedPeriod,condition,productLocation,postingTime,category,description} = ad;
+
+    const [seller,setSeller] = useState('');
+    useEffect(() =>{
+      fetch(`http://localhost:5000/seller/${email}`)
+      .then(res => res.json())
+      .then(data => setSeller(data))    
+    },[email])   
+    
+    
+
     return (
         <div className="card w-full bg-base-100 shadow-xl">
         <figure className='h-64'>
@@ -15,9 +26,9 @@ const CategoryProductCard = ({ad,setProduct}) => {
             {productName}
 
             {
-               condition == 'good' ? <div className={`badge badge-error text-white`}>{condition}</div> 
-              : condition == 'medium' ? <div className={`badge badge-primary text-white`}>{condition}</div>
-              : condition == 'best' ? <div className={`badge badge-secondary text-white`}>{condition}</div>
+               condition === 'good' ? <div className={`badge badge-error text-white`}>{condition}</div> 
+              : condition === 'medium' ? <div className={`badge badge-primary text-white`}>{condition}</div>
+              : condition === 'best' ? <div className={`badge badge-secondary text-white`}>{condition}</div>
               : ''
             }
             
@@ -28,7 +39,7 @@ const CategoryProductCard = ({ad,setProduct}) => {
               <p className='font-bold text-xs'><span className='text-cyan-600'>Posting Time:</span> {postingTime}</p>
           </div>
           <div className="card-actions justify-end">
-            <div className="badge badge-outline">{name} {} <FaCheckCircle className='text-purple-600'></FaCheckCircle> </div>
+            <div className="badge badge-outline"> {name} &nbsp; {seller.status === 'verified' && <FaCheckCircle className='text-purple-600'></FaCheckCircle>}</div>
             <div className="badge badge-outline">used {usedPeriod} year</div>
             <div className="badge badge-outline">{category}</div>
             <div className="badge badge-outline"><FaMapMarker></FaMapMarker> {productLocation}</div>

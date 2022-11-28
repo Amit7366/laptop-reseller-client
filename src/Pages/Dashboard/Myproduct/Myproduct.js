@@ -18,7 +18,7 @@ const Myproduct = () => {
         // always executed
       });
   }, []);
-  console.log(products);
+  
   return (
     <div className="overflow-x-auto">
       <table className="table w-full">
@@ -26,13 +26,14 @@ const Myproduct = () => {
           <tr>
             <th>#</th>
             <th>Name</th>
+            <th>Status</th>
             <th>Image</th>
             <th>Location</th>
             <th>Original Price</th>
             <th>Resale Price</th>
             <th>Years Used</th>
             <th>Advertise</th>
-            <th>Status</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -40,6 +41,7 @@ const Myproduct = () => {
             <tr key={product._id}>
               <th>{_idx + 1}</th>
               <td>{product.productName}</td>
+              <td>{product.status === 'unsold' ? <div className="badge badge-accent">{product.status}</div> : <div className="badge badge-primary">{product.status}</div>}</td>
               <td>
                 <div className="avatar">
                   <div className="w-8 rounded">
@@ -55,8 +57,8 @@ const Myproduct = () => {
               <td>{product.originalPrice}</td>
               <td>{product.resalePrice}</td>
               <td>{product.usedPeriod}</td>
-              <td>{product.advertise}</td>
-              <td>{product.status}</td>
+              <td>{product.advertise === 'true' ? <button className="btn btn-sm btn-success text-white" disabled>{product.advertise}</button> : <button className="btn btn-sm btn-warning text-white">{product.advertise}</button> }</td>
+              
             </tr>
           ))}
         </tbody>

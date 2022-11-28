@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import BookingModal from "../../Shared/BookingModal/BookingModal";
 import AdvertiseCard from "./AdvertiseCard";
 
 const Advertise = () => {
@@ -12,6 +13,7 @@ const Advertise = () => {
   //     }
   // });
   const [advertised, setAdvertised] = useState([]);
+  const [product, setProduct] = useState(null);
   useEffect(() => {
     fetch("http://localhost:5000/advertised/products")
     .then(res => res.json())
@@ -24,12 +26,17 @@ const Advertise = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {advertised.length > 0 ? (
           advertised.map((ad) => (
-            <AdvertiseCard key={ad._id} ad={ad}></AdvertiseCard>
+            <AdvertiseCard key={ad._id} ad={ad} setProduct={setProduct}></AdvertiseCard>
           ))
         ) : (
           <></>
         )}
       </div>
+      {
+        product &&
+        <BookingModal product={product} setProduct={setProduct}></BookingModal>
+      }
+
     </div>
   );
 };
