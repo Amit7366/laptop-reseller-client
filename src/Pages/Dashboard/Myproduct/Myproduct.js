@@ -43,7 +43,7 @@ const Myproduct = () => {
               <th>{_idx + 1}</th>
               <td>{product.productName}</td>
               <td>{product.status === 'unsold' ? <div className="badge badge-accent">{product.status}</div> : <div className="badge badge-primary">{product.status}</div>}</td>
-              <td>{product.advertise === 'true' ? <button className="btn btn-sm btn-success text-white" disabled>{product.advertise}</button> : <button className="btn btn-sm btn-warning text-white">{product.advertise}</button> }</td>
+              <td>{product.advertise === 'true' ? <button className="btn btn-sm btn-success text-white" disabled>{product.advertise}</button> : <button className="btn btn-sm btn-warning text-white">Advertise</button> }</td>
               <td>
                 <div className="avatar">
                   <div className="w-8 rounded">
