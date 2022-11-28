@@ -8,7 +8,8 @@ import { AuthContext } from '../../Contexts/AuthPovider';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const {providerLogin,signIn }  = useContext(AuthContext);
+    const {providerLogin,signIn,createUser, updateUser }  = useContext(AuthContext);
+    const [createdUserEmail, setCreatedUserEmail] = useState("");
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const location = useLocation();
@@ -44,29 +45,35 @@ const Login = () => {
           }
     
           setLoginUserEmail(user.email);
-          navigate(from, { replace: true });
-    
-        //   fetch('https://service-review-server-amit7366.vercel.app/jwt',{
-        //     method: 'POST',
-        //     headers: {
-        //       'content-type' : 'application/json'
-        //     },
-        //     body: JSON.stringify(currentUser)
-        //   })
-        //   .then(res => res.json())
-        //   .then(data => {
-        //     console.log(data);
-        //     localStorage.setItem('token',data.token)
-    
-        //   toast.success("Successfully Loged In");
-    
-        //   navigate(from, { replace: true });
-        //   })
-          
+          fetch(`http://localhost:5000/user?email=${user.email}`)
+          .then(res => res.json())
+          .then(data =>{
+            console.log(data);
+            if(data.feedback < 1){
+                saveUser(user.displayName, user.email,'buyer');
+                navigate(from, { replace: true });
+            }
+          })
+
         })
           .catch((error) => console.log(error));
         
       };
+
+      const saveUser = (name, email,role) =>{
+        const user ={name, email,role};
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data =>{
+            setCreatedUserEmail(email);
+        })
+    }
     return (
         <div className='h-[800px] flex justify-center items-center'>
             <div className='w-96 p-7'>
