@@ -4,30 +4,36 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthPovider';
+import useToken from '../../hooks/useToken';
 
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const {providerLogin,signIn,createUser, updateUser }  = useContext(AuthContext);
-    const [createdUserEmail, setCreatedUserEmail] = useState("");
+    const [data, setData] = useState("");
     const [loginError, setLoginError] = useState('');
+    const {providerLogin,signIn }  = useContext(AuthContext);
     const [loginUserEmail, setLoginUserEmail] = useState('');
+    const [token] = useToken(loginUserEmail);
     const location = useLocation();
     const navigate = useNavigate();
 
     const from = location.state?.from?.pathname || "/";
 
+    if(token){
+        navigate(from,{replace: true});
+      }
+
     const googleProvider = new GoogleAuthProvider();
 
+    
+
     const handleLogin = (data) =>{
-        console.log(data);
         setLoginError('');
         signIn(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
                 setLoginUserEmail(data.email);
-                navigate(from, { replace: true });
+                toast.success('User Created Successfully.')
             })
             .catch(error => {
                 console.log(error.message)
@@ -51,7 +57,7 @@ const Login = () => {
             console.log(data);
             if(data.feedback < 1){
                 saveUser(user.displayName, user.email,'buyer');
-                navigate(from, { replace: true });
+                
             }
           })
 
@@ -71,7 +77,7 @@ const Login = () => {
         })
         .then(res => res.json())
         .then(data =>{
-            setCreatedUserEmail(email);
+            // setCreatedUserEmail(email);
         })
     }
     return (

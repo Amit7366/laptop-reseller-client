@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthPovider";
+import useToken from "../../hooks/useToken";
 
 const Registration = () => {
   const {
@@ -14,7 +15,12 @@ const Registration = () => {
 
   const [signUpError, setSignUPError] = useState("");
   const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
   const navigate = useNavigate();
+
+  if(token){
+    navigate('/');
+  }
 
   const handleSignUp = (data) => {
     console.log(data);

@@ -1,12 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
+import { AuthContext } from '../../../Contexts/AuthPovider';
 
 const AllBuyer = () => {
+  const { user } = useContext(AuthContext);
     const { data: allbuyer = [], refetch, isLoading } = useQuery({
-        queryKey: ['allbuyer'],
+        queryKey: ['allbuyer', user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/buyer`);
+            const res = await fetch(`http://localhost:5000/buyer?email=${user.email}`,{
+              headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}` 
+             }
+            });
             const data = await res.json();
             return data
         }

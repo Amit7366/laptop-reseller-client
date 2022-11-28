@@ -5,7 +5,11 @@ const MyOrder = () => {
     const [orders,setOrders] = useState([]);
     const {user} = useContext(AuthContext);
 
-    fetch(`http://localhost:5000/booking?email=${user.email}`)
+    fetch(`http://localhost:5000/booking?email=${user.email}`,{
+      headers: {
+        authorization: `bearer ${localStorage.getItem('accessToken')}` 
+     }
+    })
     .then(res => res.json())
     .then(data => setOrders(data))
   return (
