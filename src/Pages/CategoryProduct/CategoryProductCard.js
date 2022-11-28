@@ -34,9 +34,12 @@ const CategoryProductCard = ({ ad, setProduct }) => {
   const addToWishlist = id =>{
 
 
-    const booking = {
+    const wishlist = {
       productId: id,
-      userEmail: user.email
+      productName: productName,
+      resalePrice: resalePrice,
+      userEmail: user.email,
+      userName: user.displayName,
       
     };
 
@@ -45,7 +48,7 @@ const CategoryProductCard = ({ ad, setProduct }) => {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(booking),
+      body: JSON.stringify(wishlist),
     })
       .then((res) => res.json())
       .then((data) => {
